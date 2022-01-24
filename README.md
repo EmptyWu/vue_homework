@@ -1,7 +1,8 @@
 # Vue實戰班 第三次作業
 ## 熟練 Vue.js
 
-### 登入頁面
+
+### 登入頁面 https://emptywu.github.io/vue_homework/login.html
 * 頁面模板
 * 登入串接 POST API     /v2/admin/signin
 * 驗證登入串接 POST API /v2/api/user/check
@@ -10,7 +11,7 @@
         axios.defaults.headers.common['Authorization'] = token;
     ```
 
-### 產品頁面
+### 產品頁面 https://emptywu.github.io/vue_homework/products.html
 
 * 頁面模板                  
 * 取得產品資料串接 GET API      /v2/api/${api_path}/admin/products
