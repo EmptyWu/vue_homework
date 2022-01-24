@@ -25,7 +25,7 @@ const app=createApp({
         })        
         .catch((error)=>{
           alert(error.data.message);
-          window.location="login.html";
+          //window.location="login.html";
         })
       },
       //取得產品明細
