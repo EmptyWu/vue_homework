@@ -17,13 +17,13 @@ const app=createApp({
          
           axios.post(`${this.url}/admin/signin`,this.user)
             .then((res)=>{
-            console.log(res);
+              alert(res.data.message);
             const{token,expired} =res.data;
             document.cookie = `hextoken=${token}; expires=${new Date(expired)};`;
             window.location = 'products.html';
             })
             .catch((error)=>{
-            console.log(error);
+              alert(error.data.message);
             })
       }
   }

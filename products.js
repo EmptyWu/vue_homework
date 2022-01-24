@@ -54,7 +54,7 @@ const app=createApp({
       },
       //新增
       addProduct(){
-          console.log(this.tmpProduct);
+         
           // #6 新增一個產品
           axios.post(`${this.url}/api/${this.path}/admin/product`,{data:this.tmpProduct})
           .then((res)=>{
@@ -76,7 +76,7 @@ const app=createApp({
             this.getData();
         })
         .catch((error)=>{
-          console.log(error);
+          alert(error.data.message);
         })
       },
       openTarget(type,item){
