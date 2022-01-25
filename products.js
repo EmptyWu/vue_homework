@@ -52,33 +52,25 @@ const app=createApp({
             alert(error.data.message);
           })
       },
-      //新增
-      addProduct(){
-         
-          // #6 新增一個產品
-          axios.post(`${this.url}/api/${this.path}/admin/product`,{data:this.tmpProduct})
-          .then((res)=>{
-            alert(res.data.message);
-            productModal.hide();
-            this.getData();
-          })
-          .catch((error)=>{
-            alert(error.data.message);
-          })
-          
-      },
-      //修改  /v2/api/${api_path}/admin/product/{id}
-      EditProduct(id){
-        axios.put(`${this.url}/api/${this.path}/admin/product/${id}`,{data:this.tmpProduct})
+      updateProduct(id=''){
+        //新增
+        let productUrl=`${this.url}/api/${this.path}/admin/product`;
+        let met='post';
+        if(id!=''){
+          //修改  /v2/api/${api_path}/admin/product/{id}
+          productUrl=`${this.url}/api/${this.path}/admin/product/${id}`;
+          met='put';
+        }
+        axios[met](productUrl,{data:this.tmpProduct})
         .then((res)=>{
           alert(res.data.message);
           productModal.hide();
-            this.getData();
+          this.getData();
         })
         .catch((error)=>{
           alert(error.data.message);
         })
-      },
+      },     
       openTarget(type,item){
         this.tmpProduct = {
           imagesUrl: [],
@@ -115,6 +107,7 @@ const app=createApp({
   mounted() {
     const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common['Authorization'] = token;
+    console.log(axios.defaults.headers);
     this.check() ,
     productModal=new bootstrap.Modal(document.querySelector('#productModal'),{keyboard:false});
     delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'),{keyboard:false});
