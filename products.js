@@ -116,8 +116,8 @@ const app=createApp({
     const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common['Authorization'] = token;
     this.check() ,
-    productModal=new bootstrap.Modal(document.querySelector('#productModal'));
-    delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'));
+    productModal=new bootstrap.Modal(document.querySelector('#productModal'),{keyboard:false});
+    delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'),{keyboard:false});
   },
 });
 
