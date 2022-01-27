@@ -107,9 +107,9 @@
                   <img class="img-fluid" :src="item" alt="">
                 </div>
                 
-                <div v-if="!item">
-                  <button class="btn btn-outline-primary btn-sm d-block w-100" >
-                    新增圖片
+                <div v-if="tmpProduct.imagesUrl[key]===''">
+                  <button class="btn btn-outline-primary btn-sm d-block w-100" @click="tmpProduct.imagesUrl.splice(key, 1)">
+                    取消圖片
                   </button>
                 </div>
                 <div v-else>
@@ -119,6 +119,7 @@
                 </div>
               </template>
               <!--新增圖片-->
+              <template v-if="tmpProduct.imagesUrl.indexOf('')===-1">
               <div class="mb-2"  >
                 <div class="mb-3">
                   <label for="imageUrl" class="form-label">輸入圖片網址</label>
@@ -127,11 +128,12 @@
                 </div>
                 <img class="img-fluid" :src="imgUrl" alt="">
               </div>
-              <div v-if="!item">
+              <div>
                 <button class="btn btn-outline-primary btn-sm d-block w-100" @click="addPic()">
                   新增圖片
                 </button>
               </div>
+            </template>
               <!--新增圖片-->
               </div>
               <div class="col-sm-8">

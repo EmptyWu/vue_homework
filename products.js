@@ -94,6 +94,7 @@ const app=createApp({
         }
       },
       addPic(){
+        //console.log(this.tmpProduct.imagesUrl.indexOf(""));
         if(this.tmpProduct.imagesUrl)
         {
           this.tmpProduct.imagesUrl.push(this.imgUrl);
