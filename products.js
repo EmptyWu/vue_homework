@@ -25,7 +25,7 @@ const app=createApp({
         })        
         .catch((error)=>{
           alert(error.data.message);
-          //window.location="login.html";
+          window.location="login.html";
         })
       },
       //取得產品明細
@@ -108,7 +108,7 @@ const app=createApp({
   mounted() {
     const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common['Authorization'] = token;
-    console.log(axios.defaults.headers);
+    
     this.check() ,
     productModal=new bootstrap.Modal(document.querySelector('#productModal'),{keyboard:false});
     delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'),{keyboard:false});
