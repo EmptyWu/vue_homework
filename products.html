@@ -105,7 +105,7 @@
                 <h3>主要圖片</h3>
                 <div class="mb-3">
                   <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                  <input type="text" class="form-control" v-model="product.imageUrl" placeholder="請輸入圖片連結">
+                  <input type="file" id="mainImage" class="form-control" @change="uploadImage('main')" placeholder="請輸入圖片連結">
                   <img class="img-fluid" :src="product.imageUrl" alt="">
                 </div>
                 <h3>其他圖片</h3>
@@ -135,16 +135,19 @@
                 <!--<template >-->
                   <div class="mb-2">
                     <div class="mb-3">
-                      <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                      <input type="text" class="form-control" v-model="imgUrl" placeholder="請輸入圖片連結">
+                      <!-- <label for="imageUrl" class="form-label">輸入圖片網址</label> -->
+                      <input type="file" id="file" class="form-control"  placeholder="請輸入圖片連結">
                     </div>
-                    <img class="img-fluid" :src="imgUrl"  alt="">
+                    <!-- <img class="img-fluid" :src="imgUrl"  alt=""> -->
                   </div>
                   <div>
-                    <button class="btn btn-outline-primary btn-sm d-block w-100" @click="addPic()">
+                    <button class="btn btn-outline-primary btn-sm d-block w-100" type="button" @click="uploadImage('other')">
                       新增圖片
                     </button>
                   </div>
+
+                  <!-- <input type="file" id="file" placeholder="請輸入圖片連結">
+                  <button type="button" @click="UploadPic">新增圖片</button> -->
                 <!--</template>-->
                 <!--新增圖片-->
               </div>

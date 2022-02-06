@@ -19,6 +19,10 @@
 * 刪除產品資料串接 DELETE API   /v2/api/${api_path}/admin/product/{id}
 * 編輯產品資料串接 PUT API      /v2/api/${api_path}/admin/product/{id}
 
+* 上傳圖片(Upload) POST API    /v2/api/{api_path}/admin/upload
+    * 成功會取得 imageURL路徑，再帶入產品物件中
+
+
 ### 元件化
 
 * 分頁元件      https://emptywu.github.io/vue_homework/pagination.js   

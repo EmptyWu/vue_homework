@@ -11,8 +11,8 @@ const productModalTemplate={
   data(){
     return {
       imgUrl:'',
-      url:url, // 請加入站點
-      path : path, // 請加入個人 API Path
+      url, // 請加入站點
+      path , // 請加入個人 API Path
     }
   },
   props: ["product","isNew"],
@@ -55,6 +55,32 @@ const productModalTemplate={
     cancelProduct(){
       productModal.hide();
       this.imgUrl='';
+    },    
+    uploadImage(type){
+      let id=type==='main'?'mainImage':'file';
+      //POST  v2/api/{api_path}/admin/upload
+      const fileInput=document.querySelector(`#${id}`);
+      const file=fileInput.files[0];
+
+      //模擬form表單
+      const formData=new FormData();
+      formData.append('file-to-upload',file);
+
+      axios.post(`${this.url}/api/${this.path}/admin/upload`,formData)
+      .then((res)=>{
+        if(res.data.success){
+          if(type==='main'){
+            this.product.imageUrl=res.data.imageUrl;
+          }else {
+            if(!Array.isArray(this.product.imagesUrl))
+            {
+              this.product.imagesUrl = [];
+            }
+            this.product.imagesUrl.push(res.data.imageUrl);
+          }
+          fileInput.value=null;          
+        }
+      });
     }
   }
 };
