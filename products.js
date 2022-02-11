@@ -1,17 +1,99 @@
 import {createApp} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.9/vue.esm-browser.js';
-import {url,path} from './config.js';
-let productModal=null;
-let delProductModal=null;
+import {url,path} from './config.js'; //參數
+
+import pagination from './pagination.js'; //分頁
+import delproduct from './delproduct.js'; //刪除
+
+let productModal={};
+let delProductModal={};
+
+const productModalTemplate={
+  data(){
+    return {
+      imgUrl:'',
+      url, // 請加入站點
+      path , // 請加入個人 API Path
+    }
+  },
+  props: ["product","isNew"],
+  template:"#productModalTemplate",
+  methods:{
+    addPic(){
+      
+      //判斷是不是陣列
+      if(Array.isArray(this.product.imagesUrl))
+      {
+        this.product.imagesUrl.push(this.imgUrl);
+      }else {
+        this.product.imagesUrl = [];
+        this.product.imagesUrl.push(this.imgUrl);
+      }
+      this.imgUrl='';
+    },
+    updateProduct(){
+      
+      //新增
+      let productUrl=`${this.url}/api/${this.path}/admin/product`;
+      let met='post';
+      if(this.product?.id){
+        //修改  /v2/api/${api_path}/admin/product/{id}
+        productUrl=`${this.url}/api/${this.path}/admin/product/${this.product.id}`;
+        met='put';
+      }
+      
+      axios[met](productUrl,{data:this.product})
+      .then((res)=>{
+        alert(res.data.message);
+        productModal.hide();
+        this.$emit('get-data');
+        
+      })
+      .catch((error)=>{
+        alert(error.data.message);
+      })
+    },
+    cancelProduct(){
+      productModal.hide();
+      this.imgUrl='';
+    },    
+    uploadImage(type){
+      let id=type==='main'?'mainImage':'file';
+      //POST  v2/api/{api_path}/admin/upload
+      const fileInput=document.querySelector(`#${id}`);
+      const file=fileInput.files[0];
+
+      //模擬form表單
+      const formData=new FormData();
+      formData.append('file-to-upload',file);
+
+      axios.post(`${this.url}/api/${this.path}/admin/upload`,formData)
+      .then((res)=>{
+        if(res.data.success){
+          if(type==='main'){
+            this.product.imageUrl=res.data.imageUrl;
+          }else {
+            if(!Array.isArray(this.product.imagesUrl))
+            {
+              this.product.imagesUrl = [];
+            }
+            this.product.imagesUrl.push(res.data.imageUrl);
+          }
+          fileInput.value=null;          
+        }
+      });
+    }
+  }
+};
+
 const app=createApp({
   data(){
     return { 
-        url:url, // 請加入站點
-        path : path, // 請加入個人 API Path
+        url, // 請加入站點
+        path , // 請加入個人 API Path
         products :[],
-        itembody:{},
         tmpProduct:{ imagesUrl: [],},
         isNew:true,
-        imgUrl:''
+        pagination:{} //分頁
     };
   },
   methods: {
@@ -29,48 +111,16 @@ const app=createApp({
         })
       },
       //取得產品明細
-      getData(){
-        axios.get(`${this.url}/api/${this.path}/admin/products`)
+      getData(page=1){
+        axios.get(`${this.url}/api/${this.path}/admin/products?page=${page}`)
         .then((res)=>{
             this.products=res.data.products;
+            this.pagination=res.data.pagination;
         })
         .catch((error)=>{
           alert(error.data.message);        
         })
-      },
-      //刪除  /v2/api/${api_path}/admin/product/{id}
-      //成功回傳訊息 =>"message": "已刪除產品"
-      //失敗回傳訊息 =>"message": "無此權限"  "message": "找不到產品"
-      deleteItem(id){
-        axios.delete(`${this.url}/api/${this.path}/admin/product/${id}`)
-          .then((res)=>{
-            alert(res.data.message);
-            delProductModal.hide();
-            this.getData();
-          })
-          .catch((error)=>{
-            alert(error.data.message);
-          })
-      },
-      updateProduct(id=''){
-        //新增
-        let productUrl=`${this.url}/api/${this.path}/admin/product`;
-        let met='post';
-        if(id!=''){
-          //修改  /v2/api/${api_path}/admin/product/{id}
-          productUrl=`${this.url}/api/${this.path}/admin/product/${id}`;
-          met='put';
-        }
-        axios[met](productUrl,{data:this.tmpProduct})
-        .then((res)=>{
-          alert(res.data.message);
-          productModal.hide();
-          this.getData();
-        })
-        .catch((error)=>{
-          alert(error.data.message);
-        })
-      },     
+      },  
       openTarget(type,item){
         this.tmpProduct = {
           imagesUrl: [],
@@ -81,8 +131,8 @@ const app=createApp({
             this.isNew=true;//'新增';
           break;
           case 'edit':
-            //this.tmpProduct={...item};
-            this.tmpProduct=JSON.parse(JSON.stringify(item));            
+            this.tmpProduct={...item};
+            //this.tmpProduct=JSON.parse(JSON.stringify(item));            
             productModal.show();
                    
             this.isNew=false;//'修改';
@@ -91,27 +141,27 @@ const app=createApp({
             this.tmpProduct={...item};
             delProductModal.show();                        
             break;
+          case 'del-hide':
+            delProductModal.hide();
+            break;
         }
       },
-      addPic(){
-        //console.log(this.tmpProduct.imagesUrl.indexOf(""));
-        if(this.tmpProduct.imagesUrl)
-        {
-          this.tmpProduct.imagesUrl.push(this.imgUrl);
-        }else {
-          this.tmpProduct.imagesUrl = [];
-          this.tmpProduct.imagesUrl.push(this.imgUrl);
-        }
-        this.imgUrl='';
-      }
+  },
+  components:{
+    //'del-product':delProductTemplate,
+    delproduct,
+    'product-modal':productModalTemplate,
+    pagination
   },
   mounted() {
+    
     const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common['Authorization'] = token;
     
     this.check() ,
     productModal=new bootstrap.Modal(document.querySelector('#productModal'),{keyboard:false});
     delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'),{keyboard:false});
+    
   },
 });
 
