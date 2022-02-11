@@ -1,4 +1,4 @@
-// eslint-disable-next-line
+
 import { url, path } from '../config.js'; //參數
 import userProductModal from './productModal.js'; //產品明細
 
