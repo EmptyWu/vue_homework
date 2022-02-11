@@ -1,69 +1,118 @@
 import {createApp} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.9/vue.esm-browser.js';
-
-createApp({
+import {url,path} from './config.js';
+let productModal=null;
+let delProductModal=null;
+const app=createApp({
   data(){
     return { 
-        url:'https://vue3-course-api.hexschool.io/v2', // 請加入站點
-        path : 'emptywu', // 請加入個人 API Path
+        url:url, // 請加入站點
+        path : path, // 請加入個人 API Path
         products :[],
-        itembody:{}
+        itembody:{},
+        tmpProduct:{ imagesUrl: [],},
+        isNew:true,
+        imgUrl:''
     };
   },
   methods: {
-    check(){
-        const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        
-        axios.defaults.headers.common['Authorization'] = token;
+      //確認驗證
+      check(){
         axios.post(`${this.url}/api/user/check`)
         .then((res)=>{
-
           if(res.data.success){
-            axios.get(`${this.url}/api/${this.path}/admin/products`)
-            .then((res)=>{
-                console.log(res.data.products);
-                this.products=res.data.products;
-            })
-            
+           this.getData();
           }
         })        
         .catch((error)=>{
-          console.log(error);
+          alert(error.data.message);
+          window.location="login.html";
         })
       },
-      detail(item){
-        this.itembody=item;
+      //取得產品明細
+      getData(){
+        axios.get(`${this.url}/api/${this.path}/admin/products`)
+        .then((res)=>{
+            this.products=res.data.products;
+        })
+        .catch((error)=>{
+          alert(error.data.message);        
+        })
       },
-      addProduct(){
-        const product = {
-            data: {
-              title: '[賣]動物園造型衣服3', 
-              category: '衣服2',
-              origin_price: 100,
-              price: 300,
-              unit: '個',
-              description: 'Sit down please 名設計師設計',
-              content: '這是內容',
-              is_enabled: 1,
-              imageUrl: 'https://images.unsplash.com/photo-1573662012516-5cb4399006e7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80',
-              imagesUrl:[
-                  'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-                  'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=711&q=80',
-                  'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
-              ]
-            }
-          }
-          
-          // #6 新增一個產品
-          axios.post(`${this.url}/api/${this.path}/admin/product`,product)
+      //刪除  /v2/api/${api_path}/admin/product/{id}
+      //成功回傳訊息 =>"message": "已刪除產品"
+      //失敗回傳訊息 =>"message": "無此權限"  "message": "找不到產品"
+      deleteItem(id){
+        axios.delete(`${this.url}/api/${this.path}/admin/product/${id}`)
           .then((res)=>{
-            console.log(res);
+            alert(res.data.message);
+            delProductModal.hide();
+            this.getData();
           })
           .catch((error)=>{
-            console.log(error);
+            alert(error.data.message);
           })
+      },
+      updateProduct(id=''){
+        //新增
+        let productUrl=`${this.url}/api/${this.path}/admin/product`;
+        let met='post';
+        if(id!=''){
+          //修改  /v2/api/${api_path}/admin/product/{id}
+          productUrl=`${this.url}/api/${this.path}/admin/product/${id}`;
+          met='put';
+        }
+        axios[met](productUrl,{data:this.tmpProduct})
+        .then((res)=>{
+          alert(res.data.message);
+          productModal.hide();
+          this.getData();
+        })
+        .catch((error)=>{
+          alert(error.data.message);
+        })
+      },     
+      openTarget(type,item){
+        this.tmpProduct = {
+          imagesUrl: [],
+        };
+        switch(type){
+          case'new':
+            productModal.show();
+            this.isNew=true;//'新增';
+          break;
+          case 'edit':
+            //this.tmpProduct={...item};
+            this.tmpProduct=JSON.parse(JSON.stringify(item));            
+            productModal.show();
+                   
+            this.isNew=false;//'修改';
+            break;
+          case'del':
+            this.tmpProduct={...item};
+            delProductModal.show();                        
+            break;
+        }
+      },
+      addPic(){
+        //console.log(this.tmpProduct.imagesUrl.indexOf(""));
+        if(this.tmpProduct.imagesUrl)
+        {
+          this.tmpProduct.imagesUrl.push(this.imgUrl);
+        }else {
+          this.tmpProduct.imagesUrl = [];
+          this.tmpProduct.imagesUrl.push(this.imgUrl);
+        }
+        this.imgUrl='';
       }
   },
   mounted() {
-    this.check() 
+    const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    axios.defaults.headers.common['Authorization'] = token;
+    
+    this.check() ,
+    productModal=new bootstrap.Modal(document.querySelector('#productModal'),{keyboard:false});
+    delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'),{keyboard:false});
   },
-}).mount('#app');
+});
+
+app.mount('#app');
