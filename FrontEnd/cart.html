@@ -69,12 +69,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-4 row" v-if="cartData.total>0">
+            <div class="mt-4 row">
                 
                 <!-- 購物車列表 -->
                 <div class="col-sm-12 col-lg-6 pe-3">
                     <div class="text-end">
-                        <button class="btn btn-outline-danger" type="button" @click="cleanCart('')">清空購物車</button>
+                        <button class="btn btn-outline-danger" type="button" :disabled="cartData.carts?.length===0" @click="cleanCart('')">清空購物車</button>
                     </div>
                     <table class="table align-middle">
                         <thead>
@@ -178,7 +178,7 @@
                                 v-model="form.message"></textarea>
                         </div>
                         <div class="text-end">
-                            <button type="submit" class="btn btn-danger">送出訂單</button>
+                            <button type="submit" class="btn btn-danger" :disabled="cartData.carts?.length===0 || Object.keys(errors).length>0">送出訂單</button>
                         </div>
                     </v-form>
                 </div>
