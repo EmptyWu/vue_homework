@@ -1,5 +1,10 @@
 export default {
     props: ['product','url','path'],
+    data(){
+        return { 
+            delModal:'',
+        };
+      },
     template: `<div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1" aria-labelledby="delProductModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content border-0">
@@ -29,15 +34,26 @@ export default {
           //成功回傳訊息 =>"message": "已刪除產品"
           //失敗回傳訊息 =>"message": "無此權限"  "message": "找不到產品"
           deleteItem(){
+            this.closeModal();
             axios.delete(`${this.url}/api/${this.path}/admin/product/${this.product.id}`)
               .then((res)=>{
-                alert(res.data.message);
-                this.$emit('del-hide');
+                alert(res.data.message);                
                 this.$emit('get-data');
+                this.closeModal();
               })
               .catch((error)=>{
                 alert(error.data.message);
               })
           },
+          openModal(){
+             this.delModal.show();
+              
+          },
+          closeModal(){
+              this.delModal.hide();
+          }
+      },
+      mounted(){
+        this.delModal=new bootstrap.Modal(this.$refs.delProductModal,{keyboard:false});
       }
 };

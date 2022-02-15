@@ -3,87 +3,9 @@ import {url,path} from './config.js'; //參數
 
 import pagination from './pagination.js'; //分頁
 import delproduct from './delproduct.js'; //刪除
+import productModalTemplate from './productModal.js';//產品新增與修改
 
-let productModal={};
-let delProductModal={};
 
-const productModalTemplate={
-  data(){
-    return {
-      imgUrl:'',
-      url, // 請加入站點
-      path , // 請加入個人 API Path
-    }
-  },
-  props: ["product","isNew"],
-  template:"#productModalTemplate",
-  methods:{
-    addPic(){
-      
-      //判斷是不是陣列
-      if(Array.isArray(this.product.imagesUrl))
-      {
-        this.product.imagesUrl.push(this.imgUrl);
-      }else {
-        this.product.imagesUrl = [];
-        this.product.imagesUrl.push(this.imgUrl);
-      }
-      this.imgUrl='';
-    },
-    updateProduct(){
-      
-      //新增
-      let productUrl=`${this.url}/api/${this.path}/admin/product`;
-      let met='post';
-      if(this.product?.id){
-        //修改  /v2/api/${api_path}/admin/product/{id}
-        productUrl=`${this.url}/api/${this.path}/admin/product/${this.product.id}`;
-        met='put';
-      }
-      
-      axios[met](productUrl,{data:this.product})
-      .then((res)=>{
-        alert(res.data.message);
-        productModal.hide();
-        this.$emit('get-data');
-        
-      })
-      .catch((error)=>{
-        alert(error.data.message);
-      })
-    },
-    cancelProduct(){
-      productModal.hide();
-      this.imgUrl='';
-    },    
-    uploadImage(type){
-      let id=type==='main'?'mainImage':'file';
-      //POST  v2/api/{api_path}/admin/upload
-      const fileInput=document.querySelector(`#${id}`);
-      const file=fileInput.files[0];
-
-      //模擬form表單
-      const formData=new FormData();
-      formData.append('file-to-upload',file);
-
-      axios.post(`${this.url}/api/${this.path}/admin/upload`,formData)
-      .then((res)=>{
-        if(res.data.success){
-          if(type==='main'){
-            this.product.imageUrl=res.data.imageUrl;
-          }else {
-            if(!Array.isArray(this.product.imagesUrl))
-            {
-              this.product.imagesUrl = [];
-            }
-            this.product.imagesUrl.push(res.data.imageUrl);
-          }
-          fileInput.value=null;          
-        }
-      });
-    }
-  }
-};
 
 const app=createApp({
   data(){
@@ -107,7 +29,7 @@ const app=createApp({
         })        
         .catch((error)=>{
           alert(error.data.message);
-          window.location="login.html";
+          //window.location="login.html";
         })
       },
       //取得產品明細
@@ -127,41 +49,36 @@ const app=createApp({
         };
         switch(type){
           case'new':
-            productModal.show();
+            this.$refs.productModal.openModal();
             this.isNew=true;//'新增';
           break;
           case 'edit':
             this.tmpProduct={...item};
             //this.tmpProduct=JSON.parse(JSON.stringify(item));            
-            productModal.show();
+            this.$refs.productModal.openModal();
+            //productModal.show();
                    
             this.isNew=false;//'修改';
             break;
           case'del':
-            this.tmpProduct={...item};
-            delProductModal.show();                        
+            this.tmpProduct={...item};            
+            this.$refs.delProductModal.openModal();
+            //console.log(this.delProductModal);
+            //delProductModal.show();                        
             break;
-          case 'del-hide':
-            delProductModal.hide();
-            break;
+          
         }
       },
   },
   components:{
-    //'del-product':delProductTemplate,
     delproduct,
     'product-modal':productModalTemplate,
     pagination
   },
   mounted() {
-    
     const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     axios.defaults.headers.common['Authorization'] = token;
-    
-    this.check() ,
-    productModal=new bootstrap.Modal(document.querySelector('#productModal'),{keyboard:false});
-    delProductModal=new bootstrap.Modal(document.querySelector('#delProductModal'),{keyboard:false});
-    
+    this.check()
   },
 });
 

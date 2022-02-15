@@ -80,10 +80,10 @@
     
     <!-- Modal -->
     <!--新增 / 修改-->
-    <product-modal :product="tmpProduct" :is-new="isNew"  @get-data="getData"></product-modal>
+    <product-modal ref="productModal" :product="tmpProduct" :url="url" :path="path" :is-new="isNew"  @get-data="getData"></product-modal>
     <!--新增 / 修改-->
     <!--刪除-->
-    <delproduct :product="tmpProduct" :url="url" :path="path"  @del-hide="openTarget('del-hide',null)"  @get-data="getData"></delproduct>
+    <delproduct ref="delProductModal" :product="tmpProduct" :url="url" :path="path" @get-data="getData"></delproduct>
     <!--刪除-->
     <!-- Modal -->
   </div>
