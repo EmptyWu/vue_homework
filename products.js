@@ -7,15 +7,16 @@ import productModalTemplate from './productModal.js';//產品新增與修改
 
 
 
-const app = createApp({
-  data() {
-    return {
-      url, // 請加入站點
-      path, // 請加入個人 API Path
-      products: [],
-      tmpProduct: { imagesUrl: [], },
-      isNew: true,
-      pagination: {} //分頁
+const app=createApp({
+  data(){
+    return { 
+        url, // 請加入站點
+        path , // 請加入個人 API Path
+        products :[],
+        tmpProduct:{ imagesUrl: [],},
+        isNew:true,
+        pagination:{} //分頁
+
     };
   },
   methods: {
@@ -42,41 +43,44 @@ const app = createApp({
         .catch((error) => {
           alert(error.data.message);
         })
-    },
-    openTarget(type, item) {
-      this.tmpProduct = {
-        imagesUrl: [],
-      };
-      switch (type) {
-        case 'new':
-          this.$refs.productModal.openModal();
-          this.isNew = true;//'新增';
-          break;
-        case 'edit':
-          this.tmpProduct = { ...item };
-          //this.tmpProduct=JSON.parse(JSON.stringify(item));            
-          this.$refs.productModal.openModal();
-          //productModal.show();
 
-          this.isNew = false;//'修改';
+      },  
+      openTarget(type,item){
+        this.tmpProduct = {
+          imagesUrl: [],
+        };
+        switch(type){
+          case'new':
+            this.$refs.productModal.openModal();
+            this.isNew=true;//'新增';
           break;
-        case 'del':
-          this.tmpProduct = { ...item };
-          this.$refs.delProductModal.openModal();
-          //console.log(this.delProductModal);
-          //delProductModal.show();                        
-          break;
-
-      }
-    },
+          case 'edit':
+            this.tmpProduct={...item};
+            //this.tmpProduct=JSON.parse(JSON.stringify(item));            
+            this.$refs.productModal.openModal();
+            //productModal.show();
+                   
+            this.isNew=false;//'修改';
+            break;
+          case'del':
+            this.tmpProduct={...item};            
+            this.$refs.delProductModal.openModal();
+            //console.log(this.delProductModal);
+            //delProductModal.show();                        
+            break;
+          
+        }
+      },
   },
-  components: {
+  components:{
+
     delproduct,
     'product-modal': productModalTemplate,
     pagination
   },
   mounted() {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
     axios.defaults.headers.common['Authorization'] = token;
     this.check()
   },
