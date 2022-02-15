@@ -34,7 +34,7 @@
     * 客戶購物-刪除品項     DELETE AI      /v2/api/{api_path}/cart/{id}
     * 客戶購物-清空購物車   DELETE AI      /v2/api/{api_path}/carts
 
-*結帳
+* 結帳
     * 結帳-新增訂單   POST AI     /v2/api/{api_path}/order
     
 
