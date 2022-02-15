@@ -1,3 +1,4 @@
+/* global axios bootstrap */
 export default {
     props: ['product','url','path'],
     data(){
@@ -6,6 +7,7 @@ export default {
         };
       },
     template: `<div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1" aria-labelledby="delProductModalLabel" aria-hidden="true">
+
                     <div class="modal-dialog">
                         <div class="modal-content border-0">
                             <div class="modal-header bg-danger text-white">
@@ -29,6 +31,7 @@ export default {
                         </div>
                     </div>
                 </div>`,
+
     methods:{
         //刪除  /v2/api/${api_path}/admin/product/{id}
           //成功回傳訊息 =>"message": "已刪除產品"
@@ -57,3 +60,4 @@ export default {
         this.delModal=new bootstrap.Modal(this.$refs.delProductModal,{keyboard:false});
       }
 };
+

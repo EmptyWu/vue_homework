@@ -1,4 +1,5 @@
 export default {
+
     data(){
       return {
         imgUrl:'',       
@@ -64,10 +65,8 @@ export default {
             }else {
               if(!Array.isArray(this.product.imagesUrl))
               {
-                this.product.imagesUrl = [];
-              }
-              this.product.imagesUrl.push(res.data.imageUrl);
-            }
+
+
             fileInput.value=null;          
           }
         });
@@ -83,3 +82,4 @@ export default {
       this.productModal=new bootstrap.Modal(this.$refs.productModal,{keyboard:false});
     }
   };
+

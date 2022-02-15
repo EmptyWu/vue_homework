@@ -1,5 +1,5 @@
-import {createApp} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.9/vue.esm-browser.js';
-import {url,path} from './config.js'; //參數
+import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.9/vue.esm-browser.js';
+import { url, path } from './config.js'; //參數
 
 import pagination from './pagination.js'; //分頁
 import delproduct from './delproduct.js'; //刪除
@@ -16,32 +16,34 @@ const app=createApp({
         tmpProduct:{ imagesUrl: [],},
         isNew:true,
         pagination:{} //分頁
+
     };
   },
   methods: {
-      //確認驗證
-      check(){
-        axios.post(`${this.url}/api/user/check`)
-        .then((res)=>{
-          if(res.data.success){
-           this.getData();
+    //確認驗證
+    check() {
+      axios.post(`${this.url}/api/user/check`)
+        .then((res) => {
+          if (res.data.success) {
+            this.getData();
           }
-        })        
-        .catch((error)=>{
+        })
+        .catch((error) => {
           alert(error.data.message);
           //window.location="login.html";
         })
-      },
-      //取得產品明細
-      getData(page=1){
-        axios.get(`${this.url}/api/${this.path}/admin/products?page=${page}`)
-        .then((res)=>{
-            this.products=res.data.products;
-            this.pagination=res.data.pagination;
+    },
+    //取得產品明細
+    getData(page = 1) {
+      axios.get(`${this.url}/api/${this.path}/admin/products?page=${page}`)
+        .then((res) => {
+          this.products = res.data.products;
+          this.pagination = res.data.pagination;
         })
-        .catch((error)=>{
-          alert(error.data.message);        
+        .catch((error) => {
+          alert(error.data.message);
         })
+
       },  
       openTarget(type,item){
         this.tmpProduct = {
@@ -71,12 +73,14 @@ const app=createApp({
       },
   },
   components:{
+
     delproduct,
-    'product-modal':productModalTemplate,
+    'product-modal': productModalTemplate,
     pagination
   },
   mounted() {
     const token= document.cookie.replace(/(?:(?:^|.*;\s*)hextoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
     axios.defaults.headers.common['Authorization'] = token;
     this.check()
   },

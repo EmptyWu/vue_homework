@@ -77,10 +77,11 @@
       </table>
       <pagination :pages="pagination" @get-product="getData"></pagination>
     </div>
-    
+
     <!-- Modal -->
     <!--新增 / 修改-->
     <product-modal ref="productModal" :product="tmpProduct" :url="url" :path="path" :is-new="isNew"  @get-data="getData"></product-modal>
+
     <!--新增 / 修改-->
     <!--刪除-->
     <delproduct ref="delProductModal" :product="tmpProduct" :url="url" :path="path" @get-data="getData"></delproduct>
@@ -90,7 +91,7 @@
   <!--新增 / 修改-->
   <script type="text/x-template" id="productModalTemplate">
     <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
-      aria-hidden="true">
+      aria-hidden="true" >
       <div class="modal-dialog modal-xl">
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
@@ -105,7 +106,8 @@
                 <h3>主要圖片</h3>
                 <div class="mb-3">
                   <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                  <input type="file" id="mainImage" class="form-control" @change="uploadImage('main')" placeholder="請輸入圖片連結">
+                  <!-- <input type="file" id="mainImage" class="form-control" @change="uploadImage('main')" placeholder="請輸入圖片連結"> -->
+                  <input type="text" class="form-control" v-model="product.imageUrl" placeholder="請輸入圖片連結">
                   <img class="img-fluid" :src="product.imageUrl" alt="">
                 </div>
                 <h3>其他圖片</h3>
@@ -230,4 +232,5 @@
     crossorigin="anonymous"></script>
   <script src="products.js" type="module"></script>
 </body>
+
 </html>

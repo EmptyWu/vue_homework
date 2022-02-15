@@ -1,5 +1,5 @@
-# Vue實戰班 第四次作業
-## Vue 元件化
+# Vue實戰班 第五次作業
+## 進階語法介紹
 
 ### 登入頁面 https://emptywu.github.io/vue_homework/login.html
 * 頁面模板
@@ -21,6 +21,10 @@
 
 * 上傳圖片(Upload) POST API    /v2/api/{api_path}/admin/upload
     * 成功會取得 imageURL路徑，再帶入產品物件中
+
+### 購物車 https://emptywu.github.io/vue_homework/FrontEnd/cart.html
+
+* 頁面模板
 
 
 ### 元件化

@@ -1,0 +1,27 @@
+{
+  "name": "homework5",
+  "version": "1.0.0",
+  "description": "### 登入頁面 https://emptywu.github.io/vue_homework/login.html * 頁面模板 * 登入串接 POST API     /v2/admin/signin * 驗證登入串接 POST API /v2/api/user/check     * headers需要帶入 Authorization     ```js         //這邊會是全域的寫法         axios.defaults.headers.common['Authorization'] = token;     ```",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmptyWu/vue_homework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EmptyWu/vue_homework/issues"
+  },
+  "homepage": "https://github.com/EmptyWu/vue_homework#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-vue": "^8.4.1"
+  }
+}
