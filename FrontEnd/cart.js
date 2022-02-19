@@ -50,10 +50,6 @@ const app = Vue.createApp({
       this.productId = id;
       this.$refs.userProductModal.openModal();
     },
-    // 控制loading
-    isLoadingFlag (isType = false) {
-      this.isLoading = isType;
-    },
     closeLoadingFlag (id) {
       this.loadingFlag = id;
     },

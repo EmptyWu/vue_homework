@@ -19,7 +19,7 @@ export default {
         .then((res) => {
           this.product = res.data.product;
           this.$emit('loadingFlag', '');
-          this.$emit('isLoading', false);
+          this.$emit('isLoading');
         })
         .catch((error) => {
           alert(error.data.message);
