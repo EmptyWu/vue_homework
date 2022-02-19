@@ -51,7 +51,7 @@ const app = Vue.createApp({
       this.$refs.userProductModal.openModal();
     },
     // 控制loading
-    isLoadingFlag (isType) {
+    isLoadingFlag (isType = false) {
       this.isLoading = isType;
     },
     closeLoadingFlag (id) {
