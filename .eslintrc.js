@@ -8,15 +8,17 @@ module.exports = {
     'standard'
   ],
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
-      modules: true
+      modules: true,
+      experimentalObjectRestSpread: true
     }
   },
   plugins: [
     'vue'
   ],
   rules: {
+    semi: [0, 'always']
   }
 }

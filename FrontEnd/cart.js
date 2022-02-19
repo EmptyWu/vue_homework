@@ -1,4 +1,3 @@
-/* eslint-disable semi */
 /* eslint-disable no-undef */
 import { url, path } from '../config.js' // 參數
 import userProductModal from './productModal.js' // 產品明細
@@ -47,15 +46,18 @@ const app = Vue.createApp({
     // 查看更多
     showMore (id) {
       this.closeLoadingFlag(id);
+      this.isLoading = true;
       this.productId = id;
       this.$refs.userProductModal.openModal();
     },
     // 控制loading
+    isLoadingFlag (isType) {
+      this.isLoading = isType;
+    },
     closeLoadingFlag (id) {
       this.loadingFlag = id;
     },
     updateCart (type, id, num = 1) {
-      // console.log(`type:${type},id:${id},num:${num}`);
       let cartUrl = `${this.url}/api/${this.path}/cart`;
       let met = 'post';
       if (type === 'update') {
@@ -91,7 +93,6 @@ const app = Vue.createApp({
         })
     },
     cleanCart (id = '') {
-      // console.log(`id:${id}`);
       let delCartUrl = `${this.url}/api/${this.path}/carts`;
       if (id !== '') {
         this.closeLoadingFlag(id);
@@ -115,13 +116,15 @@ const app = Vue.createApp({
       const order = this.form;
       this.isLoading = true;
 
-      console.log(this.form);
       axios.post(`${this.url}/api/${this.path}/order`, { data: order })
         .then((res) => {
-          console.log(res);
-          alert(res.data.message);
-          this.isLoading = false;
-          this.showCarts();
+          if (res.data.success) {
+            alert(res.data.message);
+            this.isLoading = false;
+            this.$refs.form.resetForm();
+            this.form.message = '';
+            this.showCarts();
+          }
         })
         .catch((error) => {
           alert(error.message);
@@ -144,5 +147,5 @@ app.component('ErrorMessage', VeeValidate.ErrorMessage);
 
 app.use(VueLoading.Plugin);
 // eslint-disable-next-line vue/multi-word-component-names
-app.component('loading', VueLoading.Component)
+app.component('loading', VueLoading.Component);
 app.mount('#app');

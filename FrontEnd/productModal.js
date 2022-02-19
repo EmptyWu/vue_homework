@@ -17,18 +17,19 @@ export default {
     getProduct () {
       axios.get(`${this.url}/api/${this.path}/product/${this.id}`)
         .then((res) => {
-          this.product = res.data.product
-          this.$emit('loadingFlag', '')
+          this.product = res.data.product;
+          this.$emit('loadingFlag', '');
+          this.$emit('isLoading', false);
         })
         .catch((error) => {
-          alert(error.data.message)
+          alert(error.data.message);
         })
     },
     openModal () {
-      this.productModal.show()
+      this.productModal.show();
     },
     closeModal () {
-      this.productModal.hide()
+      this.productModal.hide();
     }
   },
   mounted () {

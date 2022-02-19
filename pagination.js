@@ -22,4 +22,4 @@ export default {
       </li>
     </ul>
   </nav>`
-};
+}
