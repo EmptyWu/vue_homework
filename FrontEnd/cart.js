@@ -52,6 +52,7 @@ const app = Vue.createApp({
     },
     closeLoadingFlag (id) {
       this.loadingFlag = id;
+      this.isLoading = (id !== '');
     },
     updateCart (type, id, num = 1) {
       let cartUrl = `${this.url}/api/${this.path}/cart`;

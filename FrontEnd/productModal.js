@@ -15,6 +15,7 @@ export default {
   },
   methods: {
     getProduct () {
+      this.qty = 1;
       axios.get(`${this.url}/api/${this.path}/product/${this.id}`)
         .then((res) => {
           this.product = res.data.product;
