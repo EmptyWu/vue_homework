@@ -45,3 +45,18 @@
 * 刪除產品元件  https://emptywu.github.io/vue_homework/delproduct.js
     * 傳入產品資訊、API URL、API PATH
     * 呼叫外部 getData(回第一頁) 、 openTarget(進行頁面開關使用)
+
+
+### github 設定
+* cd 到构建输出的目录下
+cd dist
+
+* 部署到自定义域域名
+* echo 'www.example.com' > CNAME
+
+git init
+git add -A
+git commit -m 'deploy'
+
+* 部署到 https://github.com/EmptyWu/vue_homework.git
+git push -f https://github.com/EmptyWu/vue_homework.git master:gh-pages
