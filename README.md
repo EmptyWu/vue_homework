@@ -1,5 +1,5 @@
 # Vue實戰班 第六次作業
-## 進階語法介紹
+## Vue Cli、Vue Router
 
 ### 登入頁面 https://emptywu.github.io/vue_homework/login.html
 * 頁面模板
