@@ -4,6 +4,13 @@
 
 <style lang="scss">
 @import '~bootstrap/scss/bootstrap';
+.obj-cover{
+  object-fit: cover;
+}
+
+.obj-position-bottom {
+  object-position: bottom;
+}
 // #app {
 //   font-family: Avenir, Helvetica, Arial, sans-serif;
 //   -webkit-font-smoothing: antialiased;
