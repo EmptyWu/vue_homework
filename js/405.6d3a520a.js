@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkhomework7"]=self["webpackChunkhomework7"]||[]).push([[405],{9405:function(n,r,e){e.r(r),e.d(r,{default:function(){return f}});var u=e(3396);function t(n,r){return(0,u.wg)(),(0,u.iD)("h1",null,"404")}var o=e(89);const c={},a=(0,o.Z)(c,[["render",t]]);var f=a}}]);
+//# sourceMappingURL=405.6d3a520a.js.map

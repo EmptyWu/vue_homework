@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkhomework7"]=self["webpackChunkhomework7"]||[]).push([[823],{823:function(e,n,r){r.r(n),r.d(n,{default:function(){return f}});var u=r(3396);function t(e,n,r,t,a,o){return(0,u.wg)(),(0,u.iD)("h2",null,"首頁")}var a={name:"HomeView",data(){return{}}},o=r(89);const c=(0,o.Z)(a,[["render",t]]);var f=c}}]);
+//# sourceMappingURL=823.e7eeb283.js.map
