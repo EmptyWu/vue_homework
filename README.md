@@ -48,15 +48,15 @@
 
 
 ### github 設定
-* cd 到构建输出的目录下
+* cd 到构建输出的目录下  
 cd dist
 
 * 部署到自定义域域名
 * echo 'www.example.com' > CNAME
 
-git init
-git add -A
-git commit -m 'deploy'
+git init  
+git add -A  
+git commit -m 'deploy'  
 
-* 部署到 https://github.com/EmptyWu/vue_homework.git
+* 部署到 https://github.com/EmptyWu/vue_homework.git  
 git push -f https://github.com/EmptyWu/vue_homework.git master:gh-pages
