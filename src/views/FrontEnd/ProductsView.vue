@@ -2,11 +2,12 @@
   <div class="container">
     <h2>產品列表</h2>
     <!-- row 決定內層的數量 -->
-    <div class="row row-cols-1 row-cols-lg-4 g-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
       <!-- 內層不定義寬度 -->
       <div class="col" v-for="product in products" :key="product.id">
         <div class="card h-100">
-            <img :src="product.imageUrl" class="card-img-top h-50" alt="..." />
+            <img :src="product.imageUrl" class="card-img-top obj-cover obj-position-bottom"
+            style="height:200px"  alt="..." />
           <div class="card-body">
             <h5 class="card-title">{{ product.title }}</h5>
             <p class="card-text">
@@ -80,15 +81,14 @@ export default {
       };
       this.$http[met](cartUrl, { data })
         .then((res) => {
-          // alert(res.data.message);
           if (res.data.success) {
             this.closeLoadingFlag('');
             this.$refs.userProductModal.closeModal();
+            this.$httpMessageState(res, `${type === 'update' ? '更新' : '新增'}購物車`);
           }
         })
         .catch((error) => {
-          console.log(error);
-          // alert(error.data.message);
+          this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
   },

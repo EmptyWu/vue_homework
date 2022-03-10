@@ -79,9 +79,9 @@ export default {
     return {
       product: {},
       qty: 1,
+      productModal: '',
     };
   },
-  template: '#userProductModal',
   watch: {
     id() {
       this.getProduct();
@@ -97,8 +97,7 @@ export default {
           this.$emit('isLoading');
         })
         .catch((error) => {
-          // alert(error.data.message);
-          console.log(error);
+          this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
     openModal() {

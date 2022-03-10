@@ -23,6 +23,7 @@ const routes = [
   },
   {
     path: '/login',
+    name: 'Login',
     component: () => import('../views/LoginView.vue'),
   },
   {
@@ -37,7 +38,25 @@ const routes = [
         path: 'orders',
         component: () => import('../views/AdminViews/OrdersView.vue'),
       },
+      { // 優惠碼
+        path: 'coupons',
+        component: () => import('../views/AdminViews/CouponsView.vue'),
+      },
+      {
+        path: 'article',
+        component: () => import('../views/AdminViews/ArticleView.vue'),
+      },
     ],
+  },
+  {
+    path: '/admin/:pathMatch(.*)*',
+    redirect: { name: 'Login' },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../views/Page404View.vue'),
+    // hidden: true,
   },
 ];
 

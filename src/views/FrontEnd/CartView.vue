@@ -106,7 +106,7 @@ export default {
           this.cartData = res.data.data;
         })
         .catch((error) => {
-          alert(error.data.message);
+          this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
     closeLoadingFlag(id) {
@@ -122,12 +122,12 @@ export default {
       this.$http
         .delete(delCartUrl)
         .then((res) => {
-          alert(res.data.message);
+          this.$httpMessageState(res, '清空購物車');
           this.showCarts();
           this.closeLoadingFlag('');
         })
         .catch((error) => {
-          alert(error.data.message);
+          this.$httpMessageState(error.response, '錯誤訊息');
         });
     },
   },
