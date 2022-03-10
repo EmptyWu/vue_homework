@@ -17,7 +17,9 @@
           aria-label="Close" ></button>
       </div>
       <div class="toast-body" v-if="msg.content">
-        {{ msg.content }}
+        <div v-for="c in contentArray" :key="c">
+        {{c}}
+        </div>
       </div>
     </div>
   </div>
@@ -28,6 +30,7 @@ export default {
   data() {
     return {
       messages: [],
+      contentArray: [],
     };
   },
   inject: ['emitter'],
@@ -44,6 +47,10 @@ export default {
   mounted() {
     this.emitter.on('push-message', (message) => {
       const { style = 'success', title, content } = message;
+      if (content) {
+        console.log(content?.split('、'));
+        this.contentArray = content?.split('、');
+      }
       this.messages.push({ style, title, content });
       this.toastShow();
     });

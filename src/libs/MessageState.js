@@ -7,7 +7,7 @@ export default function httpMessageState(response, title = '更新') {
       title: `${title}成功`,
     });
   } else {
-    // 有些訊息是字串，有些則是陣列，在此統一格式
+    // 錯誤訊息格式
     const message = typeof response.data.message === 'string'
       ? [response.data.message] : response.data.message;
     emitterEvent.emit('push-message', {

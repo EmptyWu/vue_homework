@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <button type="button" class="btn btn-primary" @click.prevent="signout">
+      <button type="button" class="btn btn-primary" @click.prevent="signOut">
         登出
       </button>
     </div>
@@ -42,7 +42,7 @@
 <script>
 export default {
   methods: {
-    signout() {
+    signOut() {
       this.$http.post(`${process.env.VUE_APP_API}/logout`)
         .then((response) => {
           this.$httpMessageState(response, '登出');
