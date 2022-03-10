@@ -1,5 +1,5 @@
-# Vue實戰班 第六次作業
-## Vue Cli、Vue Router
+# Vue實戰班 第七次作業
+## 網頁美感大揭密
 
 ### 登入頁面 https://emptywu.github.io/vue_homework/login.html
 * 頁面模板
@@ -59,4 +59,4 @@ git add -A
 git commit -m 'deploy'  
 
 * 部署到 https://github.com/EmptyWu/vue_homework.git  
-git push -f https://github.com/EmptyWu/vue_homework.git master:gh-pages
+git push -f https://github.com/EmptyWu/vue_homework.git master:gh-pages  
