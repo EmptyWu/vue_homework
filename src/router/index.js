@@ -50,7 +50,7 @@ const routes = [
   },
   {
     path: '/admin/:pathMatch(.*)*',
-    redirect: { name: 'Login' },
+    redirect: '/login',
   },
   {
     path: '/:pathMatch(.*)*',
